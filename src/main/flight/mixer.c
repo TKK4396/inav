@@ -486,6 +486,23 @@ void FAST_CODE mixTable()
     int16_t rpyMixMax = 0; // assumption: symetrical about zero.
     int16_t rpyMixMin = 0;
 
+    //---------------VTOL Custom Code--------------------
+        if(rcData[AUX3] - PWM_RANGE_MIDDLE < 260)  {
+            //swap roll and Yaw channel
+            currentMixer[0].roll = 1;
+            currentMixer[1].roll = -1;
+            currentMixer[0].yaw = 0;
+            currentMixer[1].yaw = 0;
+        }
+        else {
+            currentMixer[0].roll = 0;
+            currentMixer[1].roll = 0;
+            currentMixer[0].yaw = 1;
+            currentMixer[1].yaw = -1;
+        }
+        //-----
+
+
     // motors for non-servo mixes
     for (int i = 0; i < motorCount; i++) {
         rpyMix[i] =

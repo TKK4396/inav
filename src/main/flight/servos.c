@@ -320,6 +320,27 @@ void servoMixer(float dT)
     input[INPUT_RC_CH16]     = GET_RX_CHANNEL_INPUT(AUX12);
 #undef GET_RX_CHANNEL_INPUT
 
+    //---------------VTOL Custom Code--------------------
+    if(input[INPUT_RC_CH7] > 260)  {
+        //swap roll and Yaw channel
+        //currentServoMixer[1].targetChannel = 3;
+        currentServoMixer[1].inputSource = INPUT_STABILIZED_ROLL ;
+        currentServoMixer[1].rate = 50;
+        //currentServoMixer[3].targetChannel = 4;
+        currentServoMixer[3].inputSource = INPUT_STABILIZED_ROLL ;
+        currentServoMixer[3].rate = 50;
+    }
+    else {
+        //currentServoMixer[1].targetChannel = 3;
+        currentServoMixer[1].inputSource = INPUT_STABILIZED_YAW ;
+        currentServoMixer[1].rate = 50;
+        //currentServoMixer[3].targetChannel = 4;
+        currentServoMixer[3].inputSource = INPUT_STABILIZED_YAW ;
+        currentServoMixer[3].rate = 50;
+    }
+    //---------------VTOL Custom Code--------------------
+
+
     for (int i = 0; i < MAX_SUPPORTED_SERVOS; i++) {
         servo[i] = 0;
     }
